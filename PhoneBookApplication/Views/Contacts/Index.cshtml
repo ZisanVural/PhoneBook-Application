@@ -1,0 +1,102 @@
+﻿@model IEnumerable<PhoneBookApplication.Models.Contact>
+
+@{
+    Layout = "_Layout";
+}
+<style>
+    .a {
+        color =red;
+    }
+</style>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>
+        Kişi Listesi
+    </title>
+</head>
+<body>
+    <p>
+        <a class="btn btn-primary" asp-action="Create">Yeni Kişi Oluştur</a>
+    </p>
+
+    @* //arama temizleme işlemi*@
+    <form asp-controller="Contacts" asp-action="Index">
+        <p>
+            Ad: <input type="text" name="searchName" />
+            Soyad: <input type="text" name="searchSurname" />
+            <input type="submit" value="Ara" />
+            <input type="submit" value="Temizle" />
+        </p>
+    </form>
+
+    @* kişi tablosu modeli aaktardık*@
+
+
+
+    <table class="table table-striped table-bordered">
+
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">
+                    @*// @Html.DisplayNameFor(model => model.Name)*@ Ad
+                </th>
+                <th scope="col">
+                    @* @Html.DisplayNameFor(model => model.Surname)*@ Soyad
+                </th>
+
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th scope="col">
+                    @* @Html.DisplayNameFor(model => model.PhoneNumber)*@ Telefon Numarası
+                </th>
+                <th scope="col">
+                    @* @Html.DisplayNameFor(model => model.Titles)*@ Ünvan
+                </th>
+                <th scope="col">
+                    @* @Html.DisplayNameFor(model => model.Department*@ Departman
+                </th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                @* Sayfada görüntüleme işlemleri*@
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Surname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Titles)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Department)
+                    </td>
+                    <td>
+                        @*
+                    index sayfasındaki her bir kişi için kişiyi düzenle sil kişi bilgisi bağlantılarını bulundurur
+                    *@
+                        @* düzenleme için edit actionını çağırırız*@
+                        <a class="btn btn-success" asp-action="Edit" asp-route-id="@item.ContactId">Kişiyi Düzenle</a> @*| düzenleme için edit actionını çağırırız*@
+                        <a class="btn btn-light" asp-action="Details" asp-route-id="@item.ContactId">Kişi Bilgisi</a>@* |*@
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ContactId">Sil</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
